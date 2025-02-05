@@ -13,19 +13,19 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class AbstractEntity {
 
-    private int id;
-
-    private String name;
-
     @Id
     @GeneratedValue
-    public int getId() {
-        return id;
-    }
+    private int id;
 
     @NotBlank
     @NotNull
     @Size(max = 100)
+    private String name;
+
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
