@@ -2,8 +2,6 @@ package org.launchcode.techjobs.persistent.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -20,6 +18,11 @@ public class Skill extends AbstractEntity {
 
     public Skill() {}
 
+    public Skill(String description) {
+        super();
+        this.description = description;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -32,7 +35,7 @@ public class Skill extends AbstractEntity {
         return jobs;
     }
 
-    public void addJob(Job job) {
-        this.jobs.add(job);
+    public void setJobs(List<Job> job) {
+        this.jobs.add((Job) job);
     }
 }
