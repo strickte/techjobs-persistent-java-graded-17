@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Job extends AbstractEntity {
@@ -13,7 +14,7 @@ public class Job extends AbstractEntity {
     private Employer employer;
 
     @ManyToMany
-    private final List<Skill> skills = new ArrayList<>();
+    private List<Skill> skills = new ArrayList<>();
 
     public Job() {}
 
@@ -38,8 +39,7 @@ public class Job extends AbstractEntity {
         return skills;
     }
 
-    public void setSkills(List<Skill> skill) {
-        this.skills.add((Skill) skill);
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
-
 }
