@@ -42,7 +42,7 @@ public class HomeController {
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
-	model.addAttribute("title", "Add Job");
+        model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
         Iterable<Employer> employers = employerRepository.findAll();
         model.addAttribute("employers", employers);
@@ -52,35 +52,35 @@ public class HomeController {
     }
 
     @PostMapping("add")
-    public String processAddJobForm(@ModelAttribute @Valid Job newJob,
+    public String processAddJobForm(@ModelAttribute @Valid Job job,
                                     Errors errors,
                                     Model model,
                                     @RequestParam int employerId,
                                     @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
-	    model.addAttribute("title", "Add Job");
+            model.addAttribute("title", "Add Job");
             return "add";
         }
 
-        Employer employer = employerRepository.findById(employerId);
+        Optional<Employer> result = employerRepository.findById(employerId);
+        Employer employer = result.get();
         model.addAttribute("employer", employer);
-        newJob.setEmployer(employer);
+        job.setEmployer(employer);
 
-//        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-//        job.getSkills();
-
-       Iterable<Skill> skill = skillRepository.findAllById(skills);
-
-       newJob.setSkills((List<Skill>) skill);
-        jobRepository.save(newJob);
+        Iterable<Skill> skill = skillRepository.findAllById(skills);
+        List<Skill> skillsObjs = (List<Skill>) skill;
+        job.setSkills(skillsObjs);
+        model.addAttribute("skills", job.getSkills());
+        jobRepository.save(job);
+        model.addAttribute("job", job);
         return "redirect:";
     }
 
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
 
-            return "view";
+        return "view";
     }
 
 }
