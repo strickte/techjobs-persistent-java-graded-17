@@ -64,18 +64,22 @@ public class HomeController {
         }
 
         Optional<Employer> result = employerRepository.findById(employerId);
-        if (!result.isPresent()) {
-            return null;
+        if (result.isEmpty()) {
+            model.addAttribute("employer", null);
+            job.setEmployer(null);
+        } else {
+            Employer employer = result.get();
+            model.addAttribute("employer", employer);
+            job.setEmployer(employer);
         }
-        Employer employer = result.get();
-        model.addAttribute("employer", employer);
-        job.setEmployer(employer);
 
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         if (skillObjs.isEmpty()) {
-           return null;
+           job.setSkills(null);
+        } else {
+            job.setSkills(skillObjs);
         }
-        job.setSkills(skillObjs);
+
 
         jobRepository.save(job);
         model.addAttribute("job", job);
