@@ -68,12 +68,12 @@ public class HomeController {
             Employer employer = result.get();
             model.addAttribute("employer", employer);
             job.setEmployer(employer);
-        }
-            List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-        if (!skillObjs.isEmpty()) {
 
-            job.setSkills(skillObjs);
-            model.addAttribute("skills", job.getSkills());
+            List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+            if (!skillObjs.isEmpty()) {
+                job.setSkills(skillObjs);
+                model.addAttribute("skills", job.getSkills());
+            }
             jobRepository.save(job);
             model.addAttribute("job", job);
             return "redirect:";
